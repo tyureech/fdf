@@ -6,7 +6,7 @@
 /*   By: mmahasim <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:16:38 by mmahasim          #+#    #+#             */
-/*   Updated: 2019/10/21 19:16:41 by mmahasim         ###   ########.fr       */
+/*   Updated: 2019/11/24 18:22:55 by mmahasim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,26 +86,27 @@ int			ft_cor_z(t_m *m)
 	int i;
 	int j;
 
-	i = 0;
-	j = 0;
+	i = -1;
+	j = -1;
 	if (!(m->top_z = (t_tops_z **)malloc(sizeof(t_tops_z *) * m->len_y)))
 		return (0);
 	m->len_x = ft_count(m->m[0], ' ');
-	while (j != m->len_y)
+	while (++j != m->len_y)
 	{
 		m->k = ft_strsplit(m->m[j], ' ');
 		m->cube = ft_cube(m->len_x, ft_count(m->m[j], ' '));
+		free(m->m[j]);
 		if (!(m->top_z[j] = (t_tops_z *)malloc(sizeof(t_tops_z) * m->len_x)))
 			return (0);
-		while (m->k[i] != 0)
+		while (m->k[++i] != 0)
 		{
 			m->top_z[j][i].z = ft_atoi(m->k[i]);
-			i++;
+			free(m->k[i]);
 		}
-		j++;
-		i = 0;
+		i = -1;
 	}
-	ft_del(m->k);
+	free(m->k);
+	free(m->m);
 	return (0);
 }
 
@@ -130,5 +131,6 @@ int			main(int argc, char **argv)
 	ft_draw(m);
 	mlx_key_hook(m->win_ptr, ft_key, m);
 	mlx_loop(m->mlx_ptr);
+	ft_free(m);
 	return (0);
 }

@@ -25,9 +25,9 @@ int			ft_key(int key, t_m *m)
 	else if (key == 123)
 		m->shift_x -= 50;
 	else if (key == 69)
-		m->size_pixel += 5;
+		m->cube += 5;
 	else if (key == 78)
-		m->size_pixel -= 5;
+		m->cube -= 5;
 	else if (key == 82)
 		m->k_color += 0.05;
 	else if (key == 65)
@@ -57,9 +57,9 @@ void		ft_shaurma(int key, t_m *m)
 	else if (key == 1)
 		m->shift_zy += 50;
 	else if (key == 2)
-		m->shift_zx += 10;
+		m->shift_zx += 50;
 	else if (key == 0)
-		m->shift_zx -= 10;
+		m->shift_zx -= 50;
 }
 
 t_cor		*ft_pambukhchyan(float i, float j, float i1, float j1)
@@ -81,25 +81,25 @@ void		ft_draw(t_m *m)
 	int		j;
 	t_cor	*cor;
 
-	j = 0;
-	while (j < m->len_y)
+	j = -1;
+	while (++j < m->len_y)
 	{
-		i = 0;
-		while (i < m->len_x)
+		i = -1;
+		while (++i < m->len_x)
 		{
 			if (i < m->len_x - 1)
 			{
 				cor = ft_pambukhchyan(i, j, (i + 1), j);
 				ft_brezenham(cor, m, ft_color(cor, m));
+				free(cor);
 			}
 			if (j < m->len_y - 1)
 			{
 				cor = ft_pambukhchyan(i, j, i, (j + 1));
 				ft_brezenham(cor, m, ft_color(cor, m));
+				free(cor);
 			}
-			i++;
 		}
-		j++;
 	}
 }
 

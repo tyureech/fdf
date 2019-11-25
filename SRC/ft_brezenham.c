@@ -15,13 +15,28 @@
 #define MAX(a, b) (a > b ? a : b)
 #define MOD(i) (i < 0 ? -i : i)
 
+void	ft_free(t_m *m)
+{
+	int i;
+
+	i = 0;
+	free(m->mlx_ptr);
+	free(m->win_ptr);
+	while (!m->top_z)
+	{
+		free(m->top_z[i]);
+		i++;
+	}
+	free(m->top_z);
+	free(m);
+}
+
 void	ft_start(t_m *m)
 {
 	m->shift_x = 600;
 	m->shift_y = 540;
 	m->shift_zy = 350;
 	m->shift_zx = 250;
-	m->size_pixel = 1;
 	m->ugol_x = 0.8;
 	m->ugol_y = 0.8;
 	m->r_z = 5;
@@ -41,10 +56,10 @@ void	ft_brezenham(t_cor *cor, t_m *m, int color)
 	float		st_y;
 	int			max;
 
-	cor->x = cor->x * (m->cube + m->size_pixel) + m->shift_zx - 500;
-	cor->y = cor->y * (m->cube + m->size_pixel) + m->shift_zy - 500;
-	cor->x1 = cor->x1 * (m->cube + m->size_pixel) + m->shift_zx - 500;
-	cor->y1 = cor->y1 * (m->cube + m->size_pixel) + m->shift_zy - 500;
+	cor->x = cor->x * m->cube + m->shift_zx - 500;
+	cor->y = cor->y * m->cube + m->shift_zy - 500;
+	cor->x1 = cor->x1 * m->cube + m->shift_zx - 500;
+	cor->y1 = cor->y1 * m->cube + m->shift_zy - 500;
 	ft_3d(&cor->x, &cor->y, cor->z, m);
 	ft_3d(&cor->x1, &cor->y1, cor->z1, m);
 	cor->x += m->shift_x;

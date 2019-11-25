@@ -47,7 +47,6 @@ typedef struct		s_m
 	int				shift_y;
 	int				shift_zx;
 	int				shift_zy;
-	float			size_pixel;
 	double			ugol_x;
 	double			ugol_y;
 	float			r_z;
@@ -69,5 +68,6 @@ void				ft_start(t_m *m);
 int					ft_cor_z(t_m *m);
 void				ft_shaurma(int key, t_m *m);
 t_cor				*ft_pambukhchyan(float i, float j, float i1, float j1);
+void				ft_free(t_m	*m);
 
 #endif
